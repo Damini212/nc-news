@@ -12,12 +12,27 @@ describe("GET /api/articles/:article_id", () => {
   test("The array should return 200 all ok", () => {
     return request(app).get("/api/articles/3").expect(200);
   });
-  // test("should return the article object when the author id is provided", () => {
-  //   return request(app)
-  //     .get("api/articles/3")
-  //     .expect(200)
-  //     .then(({ body }) => {
-  //       const articles = {};
-  //     });
-  // });
+  test("should return 404 if article_id is not provided", () => {
+    return request(app).get("/api/articles/").expect(404);
+  });
+
+  test("should return the article object when the article id is provided", () => {
+    return request(app)
+      .get("/api/articles/3")
+      .expect(200)
+      .then(({ body }) => {
+        const { articles } = body;
+        expect(articles).toMatchObject({
+          article_id: 3,
+          title: "22 Amazing open source React projects",
+          topic: "coding",
+          author: "happyamy2016",
+          body: "This is a collection of open source apps built with React.JS library. In this observation, we compared nearly 800 projects to pick the top 22. (React Native: 11, React: 11). To evaluate the quality, Mybridge AI considered a variety of factors to determine how useful the projects are for programmers. To give you an idea on the quality, the average number of Github stars from the 22 projects was 1,681.",
+          created_at: "2020-02-29T11:12:00.000Z",
+          votes: 0,
+          article_img_url:
+            "https://images.pexels.com/photos/11035471/pexels-photo-11035471.jpeg?w=700&h=700",
+        });
+      });
+  });
 });
