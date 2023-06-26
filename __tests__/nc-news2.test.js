@@ -9,6 +9,9 @@ afterAll(() => {
 });
 
 describe("GET /api/topics", () => {
+  test("The array should return the 404 error if an incorrect request is made", () => {
+    return request(app).get("/api/topic").expect(404);
+  });
   test("should return an okay message", () => {
     return request(app).get("/api/topics").expect(200);
   });
