@@ -33,7 +33,17 @@ describe("GET /api/articles/:article_id/comments", () => {
         });
       });
   });
-  test("should respond with 400 if the body is not provided", () => {
+  test("should respond with 400 if an invalid username is provided", () => {
+    const comment = {
+      username: "invalid_user",
+      body: "This is not a valid user name",
+    };
+    return request(app)
+      .post("/api/articles/1/comments")
+      .send(comment)
+      .expect(400);
+  });
+  test("should respond with 400 if the username is provided and the body is missing", () => {
     const comment = {
       username: "tickle122",
     };
@@ -42,7 +52,7 @@ describe("GET /api/articles/:article_id/comments", () => {
       .send(comment)
       .expect(400);
   });
-  test("should respond with 400 if the body is not provided", () => {
+  test("should respond with 400 if the body is provided and the username is missing", () => {
     const comment = {
       body: "this is invalid",
     };
