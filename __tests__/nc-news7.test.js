@@ -42,4 +42,13 @@ describe("GET /api/articles/:article_id/comments", () => {
       .send(comment)
       .expect(400);
   });
+  test("should respond with 400 if the body is not provided", () => {
+    const comment = {
+      body: "this is invalid",
+    };
+    return request(app)
+      .post("/api/articles/1/comments")
+      .send(comment)
+      .expect(400);
+  });
 });
