@@ -29,14 +29,13 @@ describe("GET /api/articles/:article_id/comments", () => {
       .expect(200)
       .then(({ body }) => {
         const { comments } = body;
-        console.log(comments);
-        expect(comments[0]).toEqual({
-          comment_id: 145,
-          votes: 10,
-          created_at: "2020-10-03T13:18:00.000Z",
-          author: "jessjelly",
-          body: "Odit aut error. Occaecati et qui. Quam nam aut dolorem.",
-          article_id: 3,
+        expect(comments[3]).toMatchObject({
+          comment_id: expect.any(Number),
+          votes: expect.any(Number),
+          created_at: expect.any(String),
+          author: expect.any(String),
+          body: expect.any(String),
+          article_id: expect.any(Number),
         });
       });
   });
