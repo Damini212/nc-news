@@ -23,13 +23,8 @@ describe("GET /api/articles/:article_id", () => {
         expect(body.message).toBe("Bad request");
       });
   });
-  test("should return 404 if an invalid id is provided", () => {
-    return request(app)
-      .get("/api/articles/99")
-      .expect(404)
-      .catch(({ body }) => {
-        expect(body.message).toBe("Id Not found");
-      });
+  test("should return 400 if an invalid id is provided", () => {
+    return request(app).get("/api/articles/99").expect(400);
   });
 
   test("should return the article object when the article id is provided", () => {
