@@ -12,8 +12,24 @@ describe("GET /api/articles/:article_id", () => {
   test("The array should return 200 all ok", () => {
     return request(app).get("/api/articles/3").expect(200);
   });
+  test("should return 400 if the article_id is a string or a combination of number and string", () => {
+    return request(app).get("/api/articles/banana1").expect(400);
+  });
   test("should return 404 if article_id is not provided", () => {
-    return request(app).get("/api/articles/").expect(404);
+    return request(app)
+      .get("/api/articles/")
+      .expect(404)
+      .catch(({ body }) => {
+        expect(body.message).toBe("Bad request");
+      });
+  });
+  test("should return 404 if an invalid id is provided", () => {
+    return request(app)
+      .get("/api/articles/99")
+      .expect(404)
+      .catch(({ body }) => {
+        expect(body.message).toBe("Id Not found");
+      });
   });
 
   test("should return the article object when the article id is provided", () => {
