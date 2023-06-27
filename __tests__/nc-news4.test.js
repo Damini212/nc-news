@@ -17,7 +17,7 @@ describe("GET /api/articles/:article_id", () => {
   });
   test("should return 404 if article_id is not provided", () => {
     return request(app)
-      .get("/api/articles/")
+      .get("/api/article")
       .expect(404)
       .catch(({ body }) => {
         expect(body.message).toBe("Bad request");
