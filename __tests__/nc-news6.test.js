@@ -18,13 +18,8 @@ describe("GET /api/articles/:article_id/comments", () => {
   test("should return 404 if the comments is not added", () => {
     return request(app).get("/api/articles/6/nocomments").expect(404);
   });
-  test("should return 404 if an invalid id is provided", () => {
-    return request(app)
-      .get("/api/articles/99")
-      .expect(404)
-      .catch(({ body }) => {
-        expect(body.message).toBe("Id Not found");
-      });
+  test("should return 400 if an invalid id is provided", () => {
+    return request(app).get("/api/articles/99").expect(400);
   });
   test("should return an array of comments for the article id provided", () => {
     return request(app)

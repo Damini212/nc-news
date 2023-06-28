@@ -41,7 +41,7 @@ describe("/api/articles", () => {
         });
       });
   });
-  test("200 should return the sorted dates in descending order", () => {
+  test("200 should returng the sorted dates in descending order", () => {
     return request(app)
       .get("/api/articles")
       .expect(200)

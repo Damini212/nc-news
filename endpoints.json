@@ -10,7 +10,7 @@
     }
   },
   "GET /api/articles": {
-    "description": "serves an array of all topics",
+    "description": "serves an array of all articles",
     "queries": ["author", "topic", "sort_by", "order"],
     "exampleResponse": {
       "articles": [
@@ -24,6 +24,34 @@
           "comment_count": 6
         }
       ]
+    }
+  },
+  "GET /api/articles/:article_id": {
+    "description": "serves an array of all articles corresponding to the author id",
+    "queries": [],
+    "exampleResponse": {
+      "article_id": 3,
+      "title": "22 Amazing open source React projects",
+      "topic": "coding",
+      "author": "happyamy2016",
+      "body": "This is a collection of open source apps built with React.JS library. In this observation, we compared nearly 800 projects to pick the top 22. (React Native: 11, React: 11). To evaluate the quality, Mybridge AI considered a variety of factors to determine how useful the projects are for programmers. To give you an idea on the quality, the average number of Github stars from the 22 projects was 1,681.",
+      "created_at": "2020-02-29T11:12:00.000Z",
+      "votes": 0,
+      "article_img_url": "https://images.pexels.com/photos/11035471/pexels-photo-11035471.jpeg?w=700&h=700"
+    }
+  },
+  "GET/api/articles/:article_id/comments": {
+    "description": "serves an array of all articles with comment count",
+    "queries": [],
+    "exampleResponse": {
+      "article_id": 34,
+      "article_img_url": "https://images.pexels.com/photos/2403392/pexels-photo-2403392.jpeg?w=700&h=700",
+      "author": "grumpy19",
+      "comment_count": "11",
+      "created_at": "2020-11-22T11:13:00.000Z",
+      "title": "The Notorious MSG's Unlikely Formula For Success",
+      "topic": "cooking",
+      "votes": 0
     }
   }
 }
