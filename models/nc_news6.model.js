@@ -18,10 +18,10 @@ const getAllCommentsById = (article_id) => {
       [article_id]
     )
     .then(({ rows }) => {
-      if (!rows[0]) {
+      if (!rows.length) {
         return Promise.reject({
           status: 404,
-          message: "Id not found",
+          message: "Not found",
         });
       }
       return rows;
