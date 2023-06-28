@@ -14,12 +14,4 @@ const postComment = (article_id, comment) => {
     });
 };
 
-const findUserByUsername = (username) => {
-  return db
-    .query(`SELECT * FROM users WHERE username = $1`, [username])
-    .then(({ rows }) => {
-      return rows[0];
-    });
-};
-
-module.exports = { postComment, findUserByUsername };
+module.exports = { postComment };

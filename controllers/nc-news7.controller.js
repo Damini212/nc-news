@@ -1,4 +1,4 @@
-const { postComment, findUserByUsername } = require("../models/nc_news7.model");
+const { postComment } = require("../models/nc_news7.model");
 
 const addComment = (req, res, next) => {
   const { article_id } = req.params;
@@ -10,21 +10,9 @@ const addComment = (req, res, next) => {
     .then((comment) => {
       res.status(201).send({ comment });
     })
-    .catch((err) => {
-      next(err);
+    .catch((error) => {
+      next(error);
     });
-
-  findUserByUsername(req.body.username)
-    .then((user) => {
-      if (!user) {
-        return Promise.reject({
-          status: 400,
-          message: "user not found",
-        });
-      }
-    })
-    .then(() => {})
-    .catch(next);
 };
 
 module.exports = addComment;
