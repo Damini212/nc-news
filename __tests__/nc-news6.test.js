@@ -15,6 +15,9 @@ describe("GET /api/articles/:article_id/comments", () => {
   test("should return 400 if the article_id is a string or a combination of number and string", () => {
     return request(app).get("/api/articles/banana1/comments").expect(400);
   });
+  test("should return 404 if the comments is not added", () => {
+    return request(app).get("/api/articles/6/nocomments").expect(404);
+  });
   test("should return 404 if an invalid id is provided", () => {
     return request(app)
       .get("/api/articles/99")
