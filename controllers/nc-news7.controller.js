@@ -6,6 +6,13 @@ const addComment = (req, res, next) => {
   if (!req.body.username || !req.body.body) {
     res.status(400).send({ message: "username or body not found" });
   }
+  postComment(article_id, req.body)
+    .then((comment) => {
+      res.status(201).send({ comment });
+    })
+    .catch((err) => {
+      next(err);
+    });
 
   findUserByUsername(req.body.username)
     .then((user) => {
@@ -16,15 +23,7 @@ const addComment = (req, res, next) => {
         });
       }
     })
-    .then(() => {
-      postComment(article_id, req.body)
-        .then((comment) => {
-          res.status(201).send({ comment });
-        })
-        .catch((err) => {
-          next(err);
-        });
-    })
+    .then(() => {})
     .catch(next);
 };
 

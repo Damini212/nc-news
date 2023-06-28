@@ -10,12 +10,6 @@ const postComment = (article_id, comment) => {
       )
     )
     .then(({ rows }) => {
-      if (!rows[0]) {
-        return Promise.reject({
-          status: 404,
-          message: "Id not found",
-        });
-      }
       return rows[0];
     });
 };
