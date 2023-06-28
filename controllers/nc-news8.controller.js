@@ -2,11 +2,11 @@ const updateArticleId = require("../models/nc_news8.model");
 
 const patchArticleId = (req, res, next) => {
   const { article_id } = req.params;
+  const { inc_votes } = req.body;
 
-  const { updateVote } = req.body.updateVote;
-  updateArticleId(article_id, updateVote)
+  updateArticleId(article_id, inc_votes)
     .then((updatedArticle) => {
-      res.status(200).send({ updatedArticle });
+      res.status(201).send({ updatedArticle });
     })
     .catch(next);
 };

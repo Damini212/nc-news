@@ -14,6 +14,7 @@ const {
 } = require("./errorHandlingMiddleware");
 
 const app = express();
+app.use(express.json());
 
 app.use(express.json());
 
@@ -24,6 +25,7 @@ app.get("/api/articles/:article_id", getArticles);
 app.get("/api/articles/:article_id/comments", getAllComments);
 app.post("/api/articles/:article_id/comments", addComment);
 app.post("/api/articles/:article_id", patchArticleId);
+app.patch("/api/articles/:article_id", patchArticleId);
 
 app.use(handlePsqlErrors);
 app.use(handleCustomErrors);
