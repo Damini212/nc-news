@@ -12,12 +12,6 @@ const {
   handleServerErrors,
 } = require("./errorHandlingMiddleware");
 
-const {
-  handlePsqlErrors,
-  handleCustomErrors,
-  handleServerErrors,
-} = require("./errorHandlingMiddleware");
-
 const app = express();
 app.use(express.json());
 
