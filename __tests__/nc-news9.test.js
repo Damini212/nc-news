@@ -2,10 +2,10 @@ const request = require("supertest");
 const app = require("../app.js");
 const db = require("../db/connection.js");
 const seed = require("../db/seeds/seed.js");
-const devData = require("../db/data/development-data/index.js");
+const data = require("../db/data/test-data/index.js");
 
 beforeEach(() => {
-  return seed(devData);
+  return seed(data);
 });
 
 afterAll(() => {
