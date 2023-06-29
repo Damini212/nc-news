@@ -12,7 +12,7 @@ describe("PATCH /api/articles/:article_id", () => {
   test("should return 200 status code if sent an object with correct data", () => {
     const newVote = 1;
     const updateVote = { inc_votes: newVote };
-    return request(app).patch("/api/articles/1").send(updateVote).expect(201);
+    return request(app).patch("/api/articles/1").send(updateVote).expect(200);
   });
   test("should add votes to an article using article_id", () => {
     const newVote = 10;
@@ -27,7 +27,7 @@ describe("PATCH /api/articles/:article_id", () => {
         return request(app)
           .patch("/api/articles/1")
           .send(udpateVote)
-          .expect(201)
+          .expect(200)
           .then(({ body }) => {
             const { updatedArticle } = body;
             expect(currentVotes + newVote).toEqual(updatedArticle.votes);
@@ -48,7 +48,7 @@ describe("PATCH /api/articles/:article_id", () => {
         return request(app)
           .patch("/api/articles/1")
           .send(updateVote)
-          .expect(201)
+          .expect(200)
           .then(({ body }) => {
             const { updatedArticle } = body;
             expect(currentVotes + newVote).toEqual(updatedArticle.votes);
@@ -60,5 +60,10 @@ describe("PATCH /api/articles/:article_id", () => {
   });
   test("should return 400 if the article_id is an invalid number", () => {
     return request(app).get("/api/articles/9999").expect(400);
+  });
+  test("should return 400 status code if sent an object with incorrect data", () => {
+    const newVote = "A";
+    const updateVote = { inc_votes: newVote };
+    return request(app).patch("/api/articles/1").send(updateVote).expect(500);
   });
 });

@@ -6,9 +6,11 @@ const patchArticleId = (req, res, next) => {
 
   updateArticleId(article_id, inc_votes)
     .then((updatedArticle) => {
-      res.status(201).send({ updatedArticle });
+      res.status(200).send({ updatedArticle });
     })
-    .catch(next);
+    .catch((err) => {
+      next(err);
+    });
 };
 
 module.exports = patchArticleId;

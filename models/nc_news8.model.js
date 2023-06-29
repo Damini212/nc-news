@@ -7,6 +7,12 @@ const updateArticleId = (article_id, inc_votes) => {
       [inc_votes, article_id]
     )
     .then(({ rows }) => {
+      if (!rows.length) {
+        Promise.reject({
+          status: 400,
+          message: "Bad request",
+        });
+      }
       return rows[0];
     });
 };

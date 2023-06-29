@@ -24,7 +24,7 @@ describe("GET /api/articles/:article_id", () => {
       .get("/api/article")
       .expect(404)
       .catch(({ body }) => {
-        expect(body.message).toBe("Bad request");
+        expect(body.message).toBe("Not found");
       });
   });
   test("should return 400 if an invalid id is provided", () => {
