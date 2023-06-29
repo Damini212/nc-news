@@ -1,8 +1,12 @@
 const request = require("supertest");
 const app = require("../app.js");
 const db = require("../db/connection.js");
-const { seed } = require("../db/seeds/seed.js");
-const data = require("../db/data/test-data/topics.js");
+const seed = require("../db/seeds/seed.js");
+const data = require("../db/data/test-data/index.js");
+
+beforeEach(() => {
+  return seed(data);
+});
 
 afterAll(() => {
   return db.end;
@@ -34,15 +38,14 @@ describe("GET /api/articles/:article_id", () => {
       .then(({ body }) => {
         const { articles } = body;
         expect(articles).toMatchObject({
-          article_id: 3,
-          title: "22 Amazing open source React projects",
-          topic: "coding",
-          author: "happyamy2016",
-          body: "This is a collection of open source apps built with React.JS library. In this observation, we compared nearly 800 projects to pick the top 22. (React Native: 11, React: 11). To evaluate the quality, Mybridge AI considered a variety of factors to determine how useful the projects are for programmers. To give you an idea on the quality, the average number of Github stars from the 22 projects was 1,681.",
-          created_at: "2020-02-29T11:12:00.000Z",
-          votes: 0,
           article_img_url:
-            "https://images.pexels.com/photos/11035471/pexels-photo-11035471.jpeg?w=700&h=700",
+            "https://images.pexels.com/photos/158651/news-newsletter-newspaper-information-158651.jpeg?w=700&h=700",
+          author: "icellusedkars",
+          body: "some gifs",
+          created_at: "2020-11-03T09:12:00.000Z",
+          title: "Eight pug gifs that remind me of mitch",
+          topic: "mitch",
+          votes: 0,
         });
       });
   });
