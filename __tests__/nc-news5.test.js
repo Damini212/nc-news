@@ -87,4 +87,21 @@ describe("/api/articles", () => {
         expect(articles.length).toBe(0);
       });
   });
+  test("should sort the articles by title in ascending order", () => {
+    return request(app)
+      .get("/api/articles?sort_by=title&order=asc")
+      .expect(200)
+      .then(({ body }) => {
+        const { articles } = body;
+        expect(articles).toBeSortedBy("title");
+      });
+  });
+  test("should sort the articles by title in ascending order", () => {
+    return request(app)
+      .get("/api/articles?sort_by=invalidQuery&order=asc")
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.message).toBe("Bad request");
+      });
+  });
 });

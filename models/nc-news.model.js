@@ -30,7 +30,19 @@ const getArticlesById = (article_id) => {
     });
 };
 
-const getArticlesCommentsCount = () => {
+const getArticlesCommentsCount = ({
+  topic,
+  sort_by = "created_at",
+  order = "desc",
+}) => {
+  const validatedSortBy = ["author", "title", "topic", "created_at", "votes"];
+  if (sort_by && !validatedSortBy.includes(sort_by)) {
+    return Promise.reject({
+      status: 400,
+      message: "Bad request",
+    });
+  }
+
   return db
     .query(
       `
@@ -43,13 +55,16 @@ const getArticlesCommentsCount = () => {
   articles.article_img_url,
   COUNT(comments) AS comment_count
   FROM articles JOIN comments ON articles.article_id = comments.article_id 
-  GROUP BY articles.article_id, articles.created_at
-  ORDER BY articles.created_at DESC;
-  `
+  ${topic ? "WHERE topic = $1" : ""}
+  GROUP BY articles.article_id
+  ORDER BY ${sort_by} ${order === "asc" ? "ASC" : "DESC"};
+  `,
+      topic ? [topic] : []
     )
     .then(({ rows }) => {
       return rows;
-    });
+    })
+    .catch((err) => console.log(err));
 };
 
 const getAllCommentsById = (article_id) => {
