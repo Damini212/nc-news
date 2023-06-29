@@ -12,6 +12,7 @@ const {
   handlePsqlErrors,
   handleServerErrors,
 } = require("./errorHandlingMiddleware");
+const getUsers = require("./controllers/nc-news10.controller");
 
 const app = express();
 app.use(express.json());
@@ -25,6 +26,7 @@ app.post("/api/articles/:article_id/comments", addComment);
 app.post("/api/articles/:article_id", patchArticleId);
 app.patch("/api/articles/:article_id", patchArticleId);
 app.delete("/api/comments/:comment_id", deleteComment);
+app.get("/api/users", getUsers);
 
 app.use(handleCustomErrors);
 app.use(handlePsqlErrors);
