@@ -6,6 +6,11 @@ const getArticles = require("./controllers/nc-news4.controller");
 const getAllComments = require("./controllers/nc-news6.controller");
 const addComment = require("./controllers/nc-news7.controller");
 const patchArticleId = require("./controllers/nc-news8.controller");
+const {
+  handleCustomErrors,
+  handlePsqlErrors,
+  handleServerErrors,
+} = require("./errorHandlingMiddleware");
 
 const {
   handlePsqlErrors,
@@ -27,8 +32,8 @@ app.post("/api/articles/:article_id/comments", addComment);
 app.post("/api/articles/:article_id", patchArticleId);
 app.patch("/api/articles/:article_id", patchArticleId);
 
-app.use(handlePsqlErrors);
 app.use(handleCustomErrors);
+app.use(handlePsqlErrors);
 app.use(handleServerErrors);
 
 module.exports = app;

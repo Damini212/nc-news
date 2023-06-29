@@ -8,7 +8,7 @@ const updateArticleId = (article_id, inc_votes) => {
     )
     .then(({ rows }) => {
       if (!rows.length) {
-        Promise.reject({
+        return Promise.reject({
           status: 400,
           message: "Bad request",
         });
