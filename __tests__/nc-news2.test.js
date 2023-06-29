@@ -5,7 +5,7 @@ const { seed } = require("../db/seeds/seed.js");
 const data = require("../db/data/test-data/topics.js");
 
 afterAll(() => {
-  return db.end;
+  return db.end();
 });
 
 describe("GET /api/topics", () => {
