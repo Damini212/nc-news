@@ -67,4 +67,24 @@ describe("/api/articles", () => {
         });
       });
   });
+  test("200 should return articles filtered by a topic", () => {
+    return request(app)
+      .get("/api/articles?topic=mitch")
+      .expect(200)
+      .then(({ body }) => {
+        const { articles } = body;
+        articles.forEach((article) => {
+          expect(article).toHaveProperty("topic", "mitch");
+        });
+      });
+  });
+  test("should return  if an invalid query is made", () => {
+    return request(app)
+      .get("/api/articles?topic=xylophone")
+      .expect(200)
+      .then(({ body }) => {
+        const { articles } = body;
+        expect(articles.length).toBe(0);
+      });
+  });
 });
