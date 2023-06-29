@@ -2,13 +2,14 @@ const request = require("supertest");
 const app = require("../app.js");
 const db = require("../db/connection.js");
 const seed = require("../db/seeds/seed.js");
-const devData = require("../db/data/development-data/index.js");
+const data = require("../db/data/test-data/index.js");
 
 beforeEach(() => {
-  return seed(devData);
+  return seed(data);
 });
+
 afterAll(() => {
-  return db.end;
+  return db.end();
 });
 
 describe("PATCH /api/articles/:article_id", () => {
@@ -33,7 +34,7 @@ describe("PATCH /api/articles/:article_id", () => {
           .expect(200)
           .then(({ body }) => {
             const { updatedArticle } = body;
-            expect(currentVotes + newVote).toEqual(10);
+            expect(currentVotes + newVote).toEqual(110);
           });
       });
   });
@@ -59,19 +60,23 @@ describe("PATCH /api/articles/:article_id", () => {
       });
   });
   test("should return 400 if the article_id is a string", () => {
+    const newVote = 1;
+    const updateVote = { inc_votes: newVote };
     return request(app)
-      .get("/api/articles/banana")
+      .patch("/api/articles/banana")
       .expect(400)
       .then(({ body }) => {
         expect(body.message).toBe("Bad request");
       });
   });
-  test("should return 400 if the article_id is an invalid number", () => {
+  test("should return 404 if the article_id is an invalid number", () => {
+    const newVote = 1;
+    const updateVote = { inc_votes: newVote };
     return request(app)
-      .get("/api/articles/9999")
-      .expect(400)
+      .patch("/api/articles/9999")
+      .expect(404)
       .then(({ body }) => {
-        expect(body.message).toBe("Bad request");
+        expect(body.message).toBe("Not found");
       });
   });
   test("should return 400 status code if sent an object with incorrect data", () => {
