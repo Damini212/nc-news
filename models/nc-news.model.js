@@ -38,40 +38,51 @@ const getArticlesCommentsCount = ({
   const validatedSortBy = ["author", "title", "topic", "created_at", "votes"];
   const validatedOrder = ["asc", "desc"];
 
-  if (order && !validatedOrder.includes(order)) {
+  if (!validatedOrder.includes(order)) {
     return Promise.reject({
       status: 400,
       message: "Bad request",
     });
   }
-  if (sort_by && !validatedSortBy.includes(sort_by)) {
+  if (!validatedSortBy.includes(sort_by)) {
     return Promise.reject({
       status: 400,
       message: "Bad request",
     });
   }
 
-  return db
-    .query(
-      `
-  SELECT articles.article_id,
-  articles.author, 
-  articles.title,
-  articles.topic,
-  articles.created_at,
-  articles.votes,
-  articles.article_img_url,
-  COUNT(comments) AS comment_count
-  FROM articles JOIN comments ON articles.article_id = comments.article_id 
-  ${topic ? "WHERE topic = $1" : ""}
-  GROUP BY articles.article_id
-  ORDER BY ${sort_by} ${order === "asc" ? "ASC" : "DESC"};
-  `,
-      topic ? [topic] : []
-    )
-    .then(({ rows }) => {
+  return getAllTopicsProperties().then((topics) => {
+    const validatedTopics = topics.map(({ slug }) => slug);
+    if (topic && !validatedTopics.includes(topic)) {
+      return Promise.reject({
+        status: 404,
+        message: "Not found",
+      });
+    }
+
+    const queryValues = [];
+    let queryStr = `SELECT articles.article_id,
+    articles.author, 
+    articles.title,
+    articles.topic,
+    articles.created_at,
+    articles.votes,
+    articles.article_img_url,
+    COUNT(comments) AS comment_count
+    FROM articles JOIN comments ON articles.article_id = comments.article_id`;
+
+    if (topic) {
+      queryStr += ` WHERE topic = $1`;
+      queryValues.push(topic);
+    }
+
+    queryStr += ` GROUP BY articles.article_id
+    ORDER BY ${sort_by} ${order === "asc" ? "ASC" : "DESC"}`;
+
+    return db.query(queryStr, queryValues).then(({ rows }) => {
       return rows;
     });
+  });
 };
 
 const getAllCommentsById = (article_id) => {

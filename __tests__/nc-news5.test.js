@@ -80,10 +80,9 @@ describe("/api/articles", () => {
   test("should return 200 if an invalid query is made using topic", () => {
     return request(app)
       .get("/api/articles?topic=xylophone")
-      .expect(200)
+      .expect(404)
       .then(({ body }) => {
-        const { articles } = body;
-        expect(articles.length).toBe(0);
+        expect(body.message).toBe("Not found");
       });
   });
   test("should sort the articles by title in ascending order", () => {
