@@ -38,7 +38,7 @@ const getArticles = (req, res, next) => {
 };
 
 const getAllArticles = (req, res, next) => {
-  getArticlesCommentsCount()
+  getArticlesCommentsCount(req.query)
     .then((articles) => {
       res.status(200).send({ articles });
     })

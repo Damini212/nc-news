@@ -16,7 +16,6 @@ describe("/api/articles", () => {
   test("200 message to send all OK", () => {
     return request(app).get("/api/articles").expect(200);
   });
-  test;
   test("200 should return an array of articles", () => {
     return request(app)
       .get("/api/articles")
@@ -45,7 +44,7 @@ describe("/api/articles", () => {
         });
       });
   });
-  test("200 should returng the sorted dates in descending order", () => {
+  test("200 should return the sorted dates in descending order", () => {
     return request(app)
       .get("/api/articles")
       .expect(200)
@@ -56,7 +55,7 @@ describe("/api/articles", () => {
         });
       });
   });
-  test("200 should return a array without the body property", () => {
+  test("200 should return an array without the body property", () => {
     return request(app)
       .get("/api/articles")
       .expect(200)
@@ -65,6 +64,50 @@ describe("/api/articles", () => {
         articles.forEach((article) => {
           expect(article).not.toHaveProperty("body");
         });
+      });
+  });
+  test("200 should return articles filtered by a topic", () => {
+    return request(app)
+      .get("/api/articles?topic=mitch")
+      .expect(200)
+      .then(({ body }) => {
+        const { articles } = body;
+        articles.forEach((article) => {
+          expect(article).toHaveProperty("topic", "mitch");
+        });
+      });
+  });
+  test("should return 200 if an invalid query is made using topic", () => {
+    return request(app)
+      .get("/api/articles?topic=xylophone")
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.message).toBe("Not found");
+      });
+  });
+  test("should sort the articles by title in ascending order", () => {
+    return request(app)
+      .get("/api/articles?sort_by=title&order=asc")
+      .expect(200)
+      .then(({ body }) => {
+        const { articles } = body;
+        expect(articles).toBeSortedBy("title");
+      });
+  });
+  test("should sort the articles by title in ascending order with an invalid query", () => {
+    return request(app)
+      .get("/api/articles?sort_by=invalidQuery&order=asc")
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.message).toBe("Bad request");
+      });
+  });
+  test("should sort the articles by topic with an invalid order", () => {
+    return request(app)
+      .get("/api/articles?topic=paper&order=banana")
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.message).toBe("Bad request");
       });
   });
 });
