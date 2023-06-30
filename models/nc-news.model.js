@@ -36,6 +36,14 @@ const getArticlesCommentsCount = ({
   order = "desc",
 }) => {
   const validatedSortBy = ["author", "title", "topic", "created_at", "votes"];
+  const validatedOrder = ["asc", "desc"];
+
+  if (order && !validatedOrder.includes(order)) {
+    return Promise.reject({
+      status: 400,
+      message: "Bad request",
+    });
+  }
   if (sort_by && !validatedSortBy.includes(sort_by)) {
     return Promise.reject({
       status: 400,
