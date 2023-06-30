@@ -27,7 +27,7 @@
     }
   },
   "GET /api/articles/:article_id": {
-    "description": "serves an array of all articles corresponding to the author id",
+    "description": "serves an array of all articles corresponding to the article id",
     "queries": [],
     "exampleResponse": {
       "article_id": 3,
@@ -52,6 +52,39 @@
       "title": "The Notorious MSG's Unlikely Formula For Success",
       "topic": "cooking",
       "votes": 0
+    }
+  },
+  "POST /api/articles/:article_id/comments": {
+    "description": "serves an array of the articles with posted comments corresponding to the article id",
+    "queries": [],
+    "exampleResponse": {
+      "username": "butter_bridge",
+      "body": "This is the new comment added to the body"
+    }
+  },
+  "PATCH /api/articles/:article_id": {
+    "description": "serves an array of the articles with patched votes corresponding to the article id",
+    "queries": [],
+    "exampleResponse": {
+      "oldvote": 100,
+      "newvote": 10,
+      "vote": 110
+    }
+  },
+  "DELETE /api/comments/:comment_id": {
+    "description": "serves an array with the deleted item from the commets table",
+    "queries": [],
+    "exampleResponse": {
+      "0": []
+    }
+  },
+  "GET /api/users": {
+    "description": "serves an array of all the users",
+    "queries": [],
+    "exampleResponse": {
+      "username": " expect.any(String)",
+      "name": "expect.any(String)",
+      "avatar_url": "expect.any(String)"
     }
   }
 }
