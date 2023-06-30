@@ -55,7 +55,6 @@ describe("GET /api/articles/:article_id", () => {
       .expect(200)
       .then(({ body }) => {
         const { articles } = body;
-        console.log(articles);
         expect(articles.comment_count).toBe("1");
       });
   });
