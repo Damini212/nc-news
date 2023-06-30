@@ -63,8 +63,7 @@ const getArticlesCommentsCount = ({
     )
     .then(({ rows }) => {
       return rows;
-    })
-    .catch((err) => console.log(err));
+    });
 };
 
 const getAllCommentsById = (article_id) => {
