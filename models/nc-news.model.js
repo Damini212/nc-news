@@ -14,7 +14,15 @@ const getAllApi = () => {
 
 const getArticlesById = (article_id) => {
   return db
-    .query(`SELECT * FROM articles WHERE article_id = $1`, [article_id])
+    .query(
+      `
+    SELECT articles.*, COUNT(comments) AS comment_count
+    FROM articles
+    JOIN comments ON comments.article_id = articles.article_id
+    WHERE articles.article_id = $1
+    GROUP BY articles.article_id`,
+      [article_id]
+    )
     .then(({ rows }) => {
       if (!rows[0]) {
         throw new Error("ID not found");

@@ -9,7 +9,7 @@ beforeEach(() => {
 });
 
 afterAll(() => {
-  return db.end;
+  return db.end();
 });
 
 describe("GET /api/articles/:article_id", () => {
@@ -47,6 +47,15 @@ describe("GET /api/articles/:article_id", () => {
           topic: "mitch",
           votes: 0,
         });
+      });
+  });
+  test("should return the comment count for the article id provided", () => {
+    return request(app)
+      .get("/api/articles/6")
+      .expect(200)
+      .then(({ body }) => {
+        const { articles } = body;
+        expect(articles.comment_count).toBe("1");
       });
   });
 });
