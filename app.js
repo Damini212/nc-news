@@ -1,18 +1,21 @@
 const express = require("express");
-const getTopics = require("./controllers/nc-news2.controller");
-const getApi = require("./controllers/nc-news3.controller");
-const getAllArticles = require("./controllers/nc-news5.controller");
-const getArticles = require("./controllers/nc-news4.controller");
-const getAllComments = require("./controllers/nc-news6.controller");
-const addComment = require("./controllers/nc-news7.controller");
-const patchArticleId = require("./controllers/nc-news8.controller");
-const deleteComment = require("./controllers/nc-news9.controller");
+const {
+  getTopics,
+  getApi,
+  getAllArticles,
+  getArticles,
+  getAllComments,
+  addComment,
+  patchArticleId,
+  deleteComment,
+  getUsers,
+} = require("./controllers/nc-news.controller");
+
 const {
   handleCustomErrors,
   handlePsqlErrors,
   handleServerErrors,
 } = require("./errorHandlingMiddleware");
-const getUsers = require("./controllers/nc-news10.controller");
 
 const app = express();
 app.use(express.json());
