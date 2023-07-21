@@ -43,7 +43,14 @@ const getArticlesCommentsCount = ({
   sort_by = "created_at",
   order = "desc",
 }) => {
-  const validatedSortBy = ["author", "title", "topic", "created_at", "votes"];
+  const validatedSortBy = [
+    "author",
+    "title",
+    "topic",
+    "created_at",
+    "votes",
+    "comment_count",
+  ];
   const validatedOrder = ["asc", "desc"];
 
   if (!validatedOrder.includes(order)) {
